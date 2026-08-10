@@ -7,11 +7,11 @@ MODEL = model_call[model]
 client = Groq(api_key = API_KEY)
 st.write("Hello World!")
 if ("msg") not in st.session_state:
-    st.session_state.msg = []
+    st.session_state.msg = [{"role":"assistant","content":"Hello World!\nHow can I help you today?"}]
 if ("busy") not in st.session_state:
     st.session_state.busy = False
 st.title("CHATBOT!")
-st.write((client.chat.completions.create(model = MODEL, messages = [{"role":"user","content":"hi"}])).choices[0].message.content)
+# st.write((client.chat.completions.create(model = MODEL, messages = [{"role":"user","content":"hi"}])).choices[0].message.content)
 # if ("documents") not in st.session_state:
 #     st.session_state.documents = [
 #     "The secret code is 4391",
@@ -30,7 +30,9 @@ st.write((client.chat.completions.create(model = MODEL, messages = [{"role":"use
 #     if (submitted):
 #         st.write(num1+num2)
 #         # st.balloons()
-
+for message in st.session_state.msg:
+    with st.chat_message(message["role"]):
+        st.write(message["content"])
 if not st.session_state.busy:
     question = st.chat_input("Prompt: ")
     if question:
