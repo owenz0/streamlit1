@@ -1,8 +1,9 @@
-import ollama
 from sklearn.metrics.pairwise import cosine_similarity
 import streamlit as st
-from ollama import embed
-MODEL = "qwen2.5:1.5b"
+from groq import Groq
+API_KEY = st.secrets["GROQ_API_KEY"] #use only for streamlit
+MODEL = "llama-3.1-8b-instant"
+client = Groq(api_key = API_KEY)
 st.write("Hello World!")
 if ("msg") not in st.session_state:
     st.session_state.msg = []
@@ -35,15 +36,15 @@ if question:
         msg = []
     #search for relevant information and add it to msg
     # msg.append({"role":"user","content":question})
-        search = ollama.embed(model = "nomic-embed-text",input = st.session_state.documents)
-        ranking = cosine_similarity(ollama.embed(model = "nomic-embed-text",input = question)["embeddings"],search["embeddings"])[0]
-        rank_list =[]
-        top = ranking.argsort()[-3:]
-        for i in top:
-            msg.append({"role":"system","content":st.session_state.documents[i]})
+        # search = .embed(model = "nomic-embed-text",input = st.session_state.documents)
+        # ranking = cosine_similarity(ollama.embed(model = "nomic-embed-text",input = question)["embeddings"],search["embeddings"])[0]
+        # rank_list =[]
+        # top = ranking.argsort()[-3:]
+        # for i in top:
+        #     msg.append({"role":"system","content":st.session_state.documents[i]})
         msg.append({"role":"user","content":question})
-        response = ollama.chat(model = MODEL, messages = msg)
-        st.write("Answer: ", response["message"]["content"])
+        response = client.chat.completions.create(model = MODEL,messages = msg)
+        st.write("Answer: ", response.choices[0].message.content)
         st.session_state.busy = False
 
 
