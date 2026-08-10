@@ -27,8 +27,9 @@ if ("busy") not in st.session_state:
 #         st.write(num1+num2)
 #         # st.balloons()
 
-question = st.chat_input("Prompt: ")
-if question and not st.session_state.busy:
+if not st.session_state.busy:
+    question = st.chat_input("Prompt: ")
+if question:
     st.session_state.busy = True
     st.write(question)
     with (st.spinner()):
@@ -44,7 +45,7 @@ if question and not st.session_state.busy:
         st.session_state.msg.append({"role":"user","content":question})
         response = client.chat.completions.create(model = MODEL,messages = st.session_state.msg)
         st.write("Answer: ", response.choices[0].message.content)
-        st.session_state.busy = False
+    st.session_state.busy = False
 
 
     
