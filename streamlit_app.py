@@ -25,7 +25,7 @@ with st.form("calculator"):
     submitted = st.form_submit_button("add+ballons", disabled = st.session_state.busy)
     if (submitted):
         st.write(num1+num2)
-        st.balloons()
+        # st.balloons()
 
 question = st.chat_input("Prompt: ")
 if question:
