@@ -38,10 +38,10 @@ if not st.session_state.busy:
     if question:
         st.session_state.busy = True
         st.balloons()
-        with st.chat_message(message["role"]):
-            st.write(message["content"])
         with (st.spinner()):
             msg = []
+            with st.chat_message(message["role"]):
+                st.write(message["content"])
         #search for relevant information and add it to msg
         # msg.append({"role":"user","content":question})
             # search = .embed(model = "nomic-embed-text",input = st.session_state.documents)
