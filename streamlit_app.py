@@ -29,23 +29,23 @@ if ("busy") not in st.session_state:
 
 if not st.session_state.busy:
     question = st.chat_input("Prompt: ")
-if question:
-    st.session_state.busy = True
-    st.write(question)
-    with (st.spinner()):
-        msg = []
-    #search for relevant information and add it to msg
-    # msg.append({"role":"user","content":question})
-        # search = .embed(model = "nomic-embed-text",input = st.session_state.documents)
-        # ranking = cosine_similarity(ollama.embed(model = "nomic-embed-text",input = question)["embeddings"],search["embeddings"])[0]
-        # rank_list =[]
-        # top = ranking.argsort()[-3:]
-        # for i in top:
-        #     msg.append({"role":"system","content":st.session_state.documents[i]})
-        st.session_state.msg.append({"role":"user","content":question})
-        response = client.chat.completions.create(model = MODEL,messages = st.session_state.msg)
-        st.write("Answer: ", response.choices[0].message.content)
-    st.session_state.busy = False
+    if question:
+        st.session_state.busy = True
+        st.write(question)
+        with (st.spinner()):
+            msg = []
+        #search for relevant information and add it to msg
+        # msg.append({"role":"user","content":question})
+            # search = .embed(model = "nomic-embed-text",input = st.session_state.documents)
+            # ranking = cosine_similarity(ollama.embed(model = "nomic-embed-text",input = question)["embeddings"],search["embeddings"])[0]
+            # rank_list =[]
+            # top = ranking.argsort()[-3:]
+            # for i in top:
+            #     msg.append({"role":"system","content":st.session_state.documents[i]})
+            st.session_state.msg.append({"role":"user","content":question})
+            response = client.chat.completions.create(model = MODEL,messages = st.session_state.msg)
+            st.write("Answer: ", response.choices[0].message.content)
+        st.session_state.busy = False
 
 
     
