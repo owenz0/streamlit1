@@ -8,6 +8,8 @@ if ("msg") not in st.session_state:
     st.session_state.msg = []
 if ("busy") not in st.session_state:
     st.session_state.busy = False
+st.title("CHATBOT1")
+st.write((client.chat.completions.create(model = MODEL, messages = [{"role":"user","content":" "}]))[0].message.content)
 # if ("documents") not in st.session_state:
 #     st.session_state.documents = [
 #     "The secret code is 4391",
@@ -28,7 +30,7 @@ if ("busy") not in st.session_state:
 #         # st.balloons()
 
 if not st.session_state.busy:
-    question = st.chat_input("Prompt: ")
+    question = st.text_input("Prompt: ")
     if question:
         st.session_state.busy = True
         st.balloons()
