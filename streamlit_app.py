@@ -19,13 +19,13 @@ if ("documents") not in st.session_state:
     "Dogs are fun pets.",
     "Dogs are fun pets"
 ]
-with st.form("calculator"):
-    num1 = st.number_input("First number")
-    num2 = st.number_input("Second number")
-    submitted = st.form_submit_button("add+ballons", disabled = st.session_state.busy)
-    if (submitted):
-        st.write(num1+num2)
-        # st.balloons()
+# with st.form("calculator"):
+#     num1 = st.number_input("First number")
+#     num2 = st.number_input("Second number")
+#     submitted = st.form_submit_button("add+ballons", disabled = st.session_state.busy)
+#     if (submitted):
+#         st.write(num1+num2)
+#         # st.balloons()
 
 question = st.chat_input("Prompt: ")
 if question:
