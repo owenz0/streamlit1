@@ -8,17 +8,17 @@ if ("msg") not in st.session_state:
     st.session_state.msg = []
 if ("busy") not in st.session_state:
     st.session_state.busy = False
-if ("documents") not in st.session_state:
-    st.session_state.documents = [
-    "The secret code is 4391",
-    "Are dogs good pets?",
-    "Dogs are playful pets.",
-    "Machine learning shows how computers learn.",
-    "Basketball is a good sport.",
-    "Dogs can be friendly companions.",
-    "Dogs are fun pets.",
-    "Dogs are fun pets"
-]
+# if ("documents") not in st.session_state:
+#     st.session_state.documents = [
+#     "The secret code is 4391",
+#     "Are dogs good pets?",
+#     "Dogs are playful pets.",
+#     "Machine learning shows how computers learn.",
+#     "Basketball is a good sport.",
+#     "Dogs can be friendly companions.",
+#     "Dogs are fun pets.",
+#     "Dogs are fun pets"
+# ]
 # with st.form("calculator"):
 #     num1 = st.number_input("First number")
 #     num2 = st.number_input("Second number")
@@ -28,7 +28,7 @@ if ("documents") not in st.session_state:
 #         # st.balloons()
 
 question = st.chat_input("Prompt: ")
-if question:
+if question and not st.session_state.busy:
     st.session_state.busy = True
     st.write(question)
     with (st.spinner()):
@@ -41,8 +41,8 @@ if question:
         # top = ranking.argsort()[-3:]
         # for i in top:
         #     msg.append({"role":"system","content":st.session_state.documents[i]})
-        msg.append({"role":"user","content":question})
-        response = client.chat.completions.create(model = MODEL,messages = msg)
+        st.session_state.msg.append({"role":"user","content":question})
+        response = client.chat.completions.create(model = MODEL,messages = st.session_state.msg)
         st.write("Answer: ", response.choices[0].message.content)
         st.session_state.busy = False
 
