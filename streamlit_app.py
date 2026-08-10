@@ -40,8 +40,9 @@ if not st.session_state.busy:
         st.balloons()
         with (st.spinner()):
             msg = []
-            with st.chat_message(message["role"]):
-                st.write(message["content"])
+            st.session_state.msg.append({"role":"user","content":question})
+            with st.chat_message("user"):
+                st.write(question)
         #search for relevant information and add it to msg
         # msg.append({"role":"user","content":question})
             # search = .embed(model = "nomic-embed-text",input = st.session_state.documents)
@@ -50,7 +51,6 @@ if not st.session_state.busy:
             # top = ranking.argsort()[-3:]
             # for i in top:
             #     msg.append({"role":"system","content":st.session_state.documents[i]})
-            st.session_state.msg.append({"role":"user","content":question})
             response = client.chat.completions.create(model = MODEL,messages = st.session_state.msg)
             st.session_state.msg.append({"role":"assistant","content":response.choices[0].message.content})
         st.session_state.busy = False
