@@ -38,7 +38,8 @@ if not st.session_state.busy:
     if question:
         st.session_state.busy = True
         st.balloons()
-        st.write(question)
+        with st.chat_message(message["role"]):
+            st.write(message["content"])
         with (st.spinner()):
             msg = []
         #search for relevant information and add it to msg
