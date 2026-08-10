@@ -1,15 +1,17 @@
 import streamlit as st
 from groq import Groq
 API_KEY = st.secrets["GROQ_API_KEY"] #use only for streamlit
-MODEL = "llama-3.1-8b-instant"
+model = st.selectbox("Choose a model: ",["Meta Llama 3.1","OpenAI OSS 20B","OpenAI OSS 120B"])
+model_call = {"Meta Llama 3.1":"llama-3.1-8b-instant","OpenAI OSS 20B":"openai/gpt-oss-20b","OpenAI OSS 120B":"openai/gpt-oss-120b"}
+MODEL = model_call[model]
 client = Groq(api_key = API_KEY)
 st.write("Hello World!")
 if ("msg") not in st.session_state:
     st.session_state.msg = []
 if ("busy") not in st.session_state:
     st.session_state.busy = False
-st.title("CHATBOT1")
-st.write((client.chat.completions.create(model = MODEL, messages = [{"role":"user","content":" "}])).choices[0].message.content)
+st.title("CHATBOT!")
+st.write((client.chat.completions.create(model = MODEL, messages = [{"role":"user","content":"hi"}])).choices[0].message.content)
 # if ("documents") not in st.session_state:
 #     st.session_state.documents = [
 #     "The secret code is 4391",
@@ -30,7 +32,7 @@ st.write((client.chat.completions.create(model = MODEL, messages = [{"role":"use
 #         # st.balloons()
 
 if not st.session_state.busy:
-    question = st.text_input("Prompt: ")
+    question = st.chat_input("Prompt: ")
     if question:
         st.session_state.busy = True
         st.balloons()
