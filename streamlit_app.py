@@ -9,7 +9,7 @@ if ("msg") not in st.session_state:
 if ("busy") not in st.session_state:
     st.session_state.busy = False
 st.title("CHATBOT1")
-st.write((client.chat.completions.create(model = MODEL, messages = [{"role":"user","content":" "}]))[0].message.content)
+st.write((client.chat.completions.create(model = MODEL, messages = [{"role":"user","content":" "}])).choices[0].message.content)
 # if ("documents") not in st.session_state:
 #     st.session_state.documents = [
 #     "The secret code is 4391",
