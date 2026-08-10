@@ -51,7 +51,7 @@ if not st.session_state.busy:
             #     msg.append({"role":"system","content":st.session_state.documents[i]})
             st.session_state.msg.append({"role":"user","content":question})
             response = client.chat.completions.create(model = MODEL,messages = st.session_state.msg)
-            st.write("Answer: ", response.choices[0].message.content)
+            st.session_state.msg.append({"role":"assistant","content":response.choices[0].message.content})
         st.session_state.busy = False
 
 
