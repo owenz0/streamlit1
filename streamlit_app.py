@@ -1,4 +1,3 @@
-from sklearn.metrics.pairwise import cosine_similarity
 import streamlit as st
 from groq import Groq
 API_KEY = st.secrets["GROQ_API_KEY"] #use only for streamlit
