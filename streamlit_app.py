@@ -31,6 +31,7 @@ if not st.session_state.busy:
     question = st.chat_input("Prompt: ")
     if question:
         st.session_state.busy = True
+        st.balloons()
         st.write(question)
         with (st.spinner()):
             msg = []
