@@ -1,6 +1,8 @@
 import streamlit as st
 import chromadb
 from groq import Groq
+from pathlib import Path
+from pypdf import PdfReader
 if ("current_chat_id") not in st.session_state:
     st.session_state.current_chat_id = 1
 if ("chats") not in st.session_state:
@@ -34,7 +36,8 @@ model_call = {"Meta Llama 3.1":"llama-3.1-8b-instant","OpenAI OSS 20B":"openai/g
 # st.write("Hello World!")
 MODEL = model_call[model]
 groq_client = Groq(api_key = API_KEY)
-
+chroma_client = chromadb.Client()
+collection = chroma_client.get_or_create_collection(f"collection{st.session_state.current_chat_id}")
 # if ("msg") not in st.session_state:
 #     st.session_state.msg = [{"role":"assistant","content":"Hello World!\nHow can I help you today?"}]
 # if ("busy") not in st.session_state:
@@ -84,12 +87,17 @@ if not curr["busy"]:
         curr["busy"] = True
         st.balloons()
         with (st.spinner()):
-            chroma_client = chromadb.Client()
-            collection = chroma_client.get_or_create_collection("documents")
             uploaded_files = question["files"]
             question_text = question["text"]
             for file in uploaded_files:
-                text = file.read().decode("utf-8")
+                file_extension = Path(file.name).suffix.lower()
+                if (file_extension == ".txt"):
+                    text = file.read().decode("utf-8")
+                elif file_extension == ".pdf":
+                    reader = PdfReader(file)
+                    text = ""
+                    for page in reader.pages:
+                        text+=page.extract_text()+"\n"
                 #highly customizable/ by chunks
                 chunks = []
                 chunk_size = 100
