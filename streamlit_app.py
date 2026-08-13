@@ -93,6 +93,7 @@ with top_left_col:
                 st.rerun()
 if (st.session_state.easter_eggs):
     st.snow()
+    emoji_float(emojis=["🔥", "🚀", "🎉","😄","🤩","🥳"],count = 50,minSize = 50,maxSize = 100,animationLength = 3)
 model_call = {"Meta Llama 3.1":"llama-3.1-8b-instant","OpenAI OSS 20B":"openai/gpt-oss-20b","OpenAI OSS 120B":"openai/gpt-oss-120b"}
 MODEL = model_call[st.session_state.model]
 curr = st.session_state.chats[st.session_state.current_chat_id]   
