@@ -8,6 +8,7 @@ if ("start_complete") not in st.session_state:
             from groq import Groq
             from pathlib import Path
             from pypdf import PdfReader
+            from streamlit_emoji_float import emoji_float
             if ("current_chat_id") not in st.session_state:
                 st.session_state.current_chat_id = 1
             if ("chats") not in st.session_state:
@@ -35,6 +36,7 @@ import chromadb
 from groq import Groq
 from pathlib import Path
 from pypdf import PdfReader
+from streamlit_emoji_float import emoji_float
 # st.snow()
 @st.cache_resource
 def getGroq():
