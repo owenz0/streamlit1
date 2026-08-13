@@ -2,7 +2,7 @@ import streamlit as st
 st.set_page_config(layout = "wide")
 if ("start_complete") not in st.session_state:
     with st.status("Starting Up...",expanded = True) as status:
-        st.write("Initializing Environment")
+        st.write("Initializing Environment (Up to 1min)")
         with (st.spinner()):
             import chromadb
             from groq import Groq
@@ -95,7 +95,7 @@ with top_left_col:
                 st.rerun()
 if (st.session_state.easter_eggs):
     st.snow()
-    emoji_float(emojis=["🔥", "🚀", "🎉","😄","🤩","🥳"],count = 50,minSize = 50,maxSize = 100,animationLength = 3)
+    emoji_float(emojis=["🔥", "🚀", "🎉","😄","🤩","🥳"],count = 50,minSize = 50,maxSize = 100,animationLength = 3,key = len(st.session_state.chats[st.session_state.current_chat_id]["docs"]))
 model_call = {"Meta Llama 3.1":"llama-3.1-8b-instant","OpenAI OSS 20B":"openai/gpt-oss-20b","OpenAI OSS 120B":"openai/gpt-oss-120b"}
 MODEL = model_call[st.session_state.model]
 curr = st.session_state.chats[st.session_state.current_chat_id]   
@@ -129,9 +129,8 @@ if not curr["busy"]:
                     chunks.append(text[i:i+chunk_size])
                 for i in range(len(chunks)):
                     chunks[i] = "Line "+str(i+1) + ": " + chunks[i]
-                for i,chunk in enumerate(chunks):
-                    print(i,len(chunk))
-                st.sidebar.write(len(chunks))
+                # for i,chunk in enumerate(chunks):
+                #     print(i,len(chunk))
                 tags = [file.name + str(i) for i in range(len(chunks))]
                 collection.add(documents=chunks,ids=tags)
                 with st.chat_message("system",avatar="🖥️"):
