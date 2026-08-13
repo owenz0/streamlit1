@@ -35,7 +35,7 @@ import chromadb
 from groq import Groq
 from pathlib import Path
 from pypdf import PdfReader
-
+# st.snow()
 @st.cache_resource
 def getGroq():
     API_KEY = st.secrets["GROQ_API_KEY"] #use only for streamlit
@@ -91,7 +91,8 @@ with top_left_col:
             if button:
                 st.session_state.current_chat_id = chat_id
                 st.rerun()
-
+if (st.session_state.easter_eggs):
+    st.snow()
 model_call = {"Meta Llama 3.1":"llama-3.1-8b-instant","OpenAI OSS 20B":"openai/gpt-oss-20b","OpenAI OSS 120B":"openai/gpt-oss-120b"}
 MODEL = model_call[st.session_state.model]
 curr = st.session_state.chats[st.session_state.current_chat_id]   
