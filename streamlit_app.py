@@ -129,7 +129,7 @@ if not curr["busy"]:
                 for i in range(0,len(text),step):
                     chunks.append(text[i:i+chunk_size])
                 for i in range(len(chunks)):
-                    chunks[i] = "Line "+str(i+1) + ": " + chunks[i]
+                    chunks[i] = "File " + file.name + ", Line "+str(i+1) + ": " + chunks[i]
                 # for i,chunk in enumerate(chunks):
                 #     print(i,len(chunk))
                 tags = [file.name + str(i) for i in range(len(chunks))]
@@ -137,7 +137,7 @@ if not curr["busy"]:
                 with st.chat_message("system",avatar="🖥️"):
                     st.write("File " + file.name+ " received!")
                 curr["msg"].append({"role":"system", "avatar":"🖥️","content":"File " + file.name+ " received!"})
-            if (question_text.strip()):
+            if (question_text.strip()): 
                 curr["msg"].append({"role":"user","content":question_text})
                 curr["docs"].append({"role":"user","content":question_text})
                 result = collection.query(query_texts = question_text,n_results = 10)
