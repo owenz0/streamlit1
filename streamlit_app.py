@@ -56,6 +56,8 @@ def deleteButton(indexToDelete):
 with main_header_col:
     st.title("CHATBOT!")
 if st.button("🗑️ Clear Chat File History"):
+    with st.chat_message("system",avatar="🖥️"):
+        st.write("Files received!")
     chroma_client.delete_collection(f"collection{st.session_state.current_chat_id}")
     st.rerun()
 with top_left_col:
