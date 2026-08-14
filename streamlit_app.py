@@ -103,7 +103,7 @@ for message in curr["msg"]:
     with st.chat_message(message["role"],avatar = message.get("avatar")):
         st.write(message["content"])
 if not curr["busy"]:
-    question = st.chat_input("Prompt: ",accept_file = "multiple",file_type=["txt,pdf"])
+    question = st.chat_input("Prompt: ",accept_file = "multiple",file_type=["txt","pdf"])
     if question:
         curr["busy"] = True
         if st.session_state.easter_eggs:
