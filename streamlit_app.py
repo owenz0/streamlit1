@@ -142,8 +142,8 @@ if not curr["busy"]:
                 result = collection.query(query_texts = question_text,n_results = 10)
                 for ans in result["documents"][0]:
                     curr["docs"].append({"role":"system","content":ans})
-                    st.write(len(ans))
-                    st.write(ans)
+                    # st.write(len(ans))
+                    # st.write(ans)
                 with st.chat_message("user"):
                     st.write(question_text)
         #search for relevant information and add it to msg
